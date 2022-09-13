@@ -23,7 +23,7 @@ const Home: NextPage<SessionProps> = ({ session }: SessionProps) => {
     <VStack align="center">
       <SessionBanner banner={session.banner} />
       <Flex
-        direction={["column-reverse", "row"]}
+        direction={["column", "row"]}
         px="15%"
         py="75px"
         gap={["50px", "15%"]}

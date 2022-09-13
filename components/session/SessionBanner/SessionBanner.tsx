@@ -8,7 +8,7 @@ interface BannerProps {
 
 export const SessionBanner = ({ banner }: BannerProps) => {
   return (
-    <Box w="100%" h="45vh" overflow="hidden" position="relative">
+    <Box w="100%" h={["20vh", "45vh"]} overflow="hidden" position="relative">
       <Image src={banner} width="100%" height="200" layout="fill" objectFit="cover"/>
     </Box>
   );
