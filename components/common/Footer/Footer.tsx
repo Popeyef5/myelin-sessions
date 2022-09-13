@@ -9,7 +9,7 @@ export const Footer = (props: FlexProps) => {
       <Spacer />
       <Center px="25px">
         <NextLink href="https://twitter.com/myelinvc" passHref target="_blank">
-          <Link target="_blank">
+          <Link target="_blank" rel="noopener noreferrer">
             <Icon as={FiTwitter} color="white" />
           </Link>
         </NextLink>
