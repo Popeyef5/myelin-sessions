@@ -25,7 +25,7 @@ const Home: NextPage<SessionProps> = ({ session }: SessionProps) => {
       <Flex
         direction={["column", "row"]}
         px="15%"
-        py="75px"
+        py={["25px", "75px"]}
         gap={["50px", "15%"]}
       >
         <SessionDescription
