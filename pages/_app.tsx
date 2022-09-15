@@ -23,11 +23,20 @@ const Heading: ComponentStyleConfig = {
   },
 };
 
+const breakpoints = {
+  sm: '330px',
+  md: '768px',
+  lg: '960px',
+  xl: '1290px',
+  '2xl': '1536px',
+}
+
 const theme = extendTheme({
   components: {
     Text,
     Heading,
   },
+  breakpoints
 });
 
 function MyApp({ Component, pageProps }: AppProps) {

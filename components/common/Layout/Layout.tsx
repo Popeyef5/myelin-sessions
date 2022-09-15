@@ -14,7 +14,6 @@ export const Layout = ({ children }: FlexProps) => {
       <Box flexGrow="1">
         <main>{children}</main>
       </Box>
-      <Footer />
     </Flex>
   );
 };

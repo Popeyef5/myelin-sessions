@@ -1,6 +1,5 @@
-import { VStack } from "@chakra-ui/layout";
+import { Text } from "@chakra-ui/layout";
 import { Speaker } from "../../../types";
-import { SessionGeneral } from "../SessionGeneral";
 import { SessionSpeakerList } from "../SessionSpeakerList";
 
 interface InfoProps {
@@ -10,9 +9,11 @@ interface InfoProps {
 
 export const SessionInfo = ({ date, speakers }: InfoProps) => {
   return (
-    <VStack>
-      <SessionGeneral date={date} />
+    <>
+      <Text fontWeight="100" fontSize={{base: "12", lg: "20"}} zIndex="10">
+        {date}
+      </Text>
       <SessionSpeakerList speakers={speakers} />
-    </VStack>
+    </>
   );
 };
