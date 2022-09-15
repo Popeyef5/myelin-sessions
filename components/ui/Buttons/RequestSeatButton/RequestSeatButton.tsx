@@ -36,12 +36,11 @@ export const RequestSeatButton = () => {
         company,
         social,
       });
+      onClose();
     } catch (e) {
       setStatus(
         "Oops. An unexpected error ocurred.\n Remember that you can only subscribe once."
       );
-    } finally {
-      onClose();
     }
   };
 
@@ -66,7 +65,14 @@ export const RequestSeatButton = () => {
         </Button>
       </Center>
 
-      <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered={true}
+        onCloseComplete={() => {
+          setStatus("");
+        }}
+      >
         <ModalOverlay />
         <ModalContent bg="black" p="25px">
           <ModalHeader></ModalHeader>
