@@ -2,7 +2,7 @@ import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { email, name, company } = req.body;
+  const { email, name, company, social } = req.body;
 
   if (!email || !email.length) {
     return res.status(400).json({ error: "Email is required" });
@@ -19,7 +19,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     status: "subscribed",
     merge_fields: {
       FNAME: name,
-      COMPANY: company
+      COMPANY: company,
+      SOCIAL: social
     }
   };
 

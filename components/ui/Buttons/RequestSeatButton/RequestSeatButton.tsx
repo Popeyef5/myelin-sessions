@@ -23,18 +23,25 @@ export const RequestSeatButton = () => {
   const [status, setStatus] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [social, setSocial] = useState("");
   const [company, setCompany] = useState("");
 
   const subscribe: FormEventHandler<HTMLFormElement> = async (e: FormEvent) => {
     e.preventDefault();
     try {
+      setStatus("");
       await axios.post("/api/subscribe", {
         email,
         name,
         company,
+        social,
       });
     } catch (e) {
-      setStatus("Oops. An unexpected error ocurred.\n Remember that you can only subscribe once.")
+      setStatus(
+        "Oops. An unexpected error ocurred.\n Remember that you can only subscribe once."
+      );
+    } finally {
+      onClose();
     }
   };
 
@@ -98,6 +105,16 @@ export const RequestSeatButton = () => {
                     type="email"
                     color="white"
                     onChange={(e) => setEmail(e.target.value)}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>
+                    <Text>Twitter/GitHub/Other (opt)</Text>
+                  </FormLabel>
+                  <Input
+                    type="text"
+                    color="white"
+                    onChange={(e) => setSocial(e.target.value)}
                   />
                 </FormControl>
               </VStack>
