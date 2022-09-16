@@ -2,9 +2,11 @@ import { Button } from "@chakra-ui/button";
 import { Center, Heading, Text, VStack } from "@chakra-ui/layout";
 import { NextPage } from "next";
 import { Myelin } from "../components/icons/Myelin";
-import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
   return (
     <Center minW="100%" minH="100vh" position="absolute" top="0">
       <VStack gap="30px" padding="25px">
@@ -22,14 +24,18 @@ const Home: NextPage = () => {
         >
           Myelin Sessions are exclusive, intimate, online encounters with top
           founders and investors.
-          <br /> A space to share all those things that you won&apos;t hear about
-          anywhere else.
+          <br /> A space to share all those things that you won&apos;t hear
+          about anywhere else.
         </Text>
-        <NextLink href="/session">
-          <Button px="40px" py="25px">
-            Join
-          </Button>
-        </NextLink>
+        <Button
+          px="40px"
+          py="25px"
+          onClick={() => {
+            router.push("/session");
+          }}
+        >
+          Join
+        </Button>
       </VStack>
     </Center>
   );
