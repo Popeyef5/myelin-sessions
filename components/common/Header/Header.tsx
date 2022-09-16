@@ -10,7 +10,7 @@ export const Header = () => {
       zIndex="10"
     >
       <Myelin />
-      <Text>sessions</Text>
+      <Text>Myelin Sessions</Text>
     </Flex>
   );
 };

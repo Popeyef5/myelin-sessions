@@ -16,6 +16,14 @@ export const SessionBanner = ({ banner }: BannerProps) => {
         ratio={1}
       >
         <Box height="100%" width="100%">
+          <video
+            autoPlay
+            playsInline
+            muted
+            loop
+            src={banner}
+            style={{ width: "100%", height: "100%" }}
+          />
           <Box
             position="absolute"
             top="0"
@@ -23,13 +31,7 @@ export const SessionBanner = ({ banner }: BannerProps) => {
             bottom="0"
             left="0"
             bg="rgba(0, 0, 0, 0.35)"
-          />
-          <video
-            autoPlay
-            muted
-            loop
-            src={banner}
-            style={{ width: "100%", height: "100%" }}
+            transform={{base: "translate3d(0, 0, 1px)"}}
           />
         </Box>
       </AspectRatio>
