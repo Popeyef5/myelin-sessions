@@ -1,15 +1,19 @@
 import { Box, Flex, FlexProps } from "@chakra-ui/layout";
+import Head from "next/head";
 import { Footer } from "../Footer/Footer";
 import { Header } from "../Header/Header";
 
 export const Layout = ({ children }: FlexProps) => {
   return (
     <Flex direction="column" minH="100vh" bg="black">
+      <Head>
+        <title>Myelin Sessions</title>
+        <meta name="description" content="Intimate encounters about the future with top founders and investors" />
+      </Head>
       <Header />
       <Box flexGrow="1">
         <main>{children}</main>
       </Box>
-      <Footer />
     </Flex>
   );
 };

@@ -1,1 +1,0 @@
-export { SessionGeneral } from "./SessionGeneral";

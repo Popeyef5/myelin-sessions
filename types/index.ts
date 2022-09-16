@@ -16,7 +16,6 @@ export interface Session {
   id: number;
   speakers: Speaker[];
   title: string;
-  description: string;
   date: string;
-  banner: string | StaticImageData;
+  banner: string;
 }

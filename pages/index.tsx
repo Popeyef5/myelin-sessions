@@ -1,11 +1,13 @@
-import { Box, Flex, VStack } from "@chakra-ui/layout";
+import { Box, VStack } from "@chakra-ui/layout";
 import type { GetStaticProps, NextPage } from "next";
-import { SessionBanner } from "../components/session/SessionBanner";
-import { SessionDescription } from "../components/session/SessionDescription";
-import { SessionInfo } from "../components/session/SessionInfo";
+import { RequestSeatButton } from "../components/ui/Buttons/RequestSeatButton";
+import { BsArrowUpLeft } from "react-icons/bs";
 
 import sessions from "../json/sessions.json";
 import { Session } from "../types";
+import { SessionInfo } from "../components/session/SessionInfo";
+import { SessionTitle } from "../components/session/SessionTitle";
+import { SessionBanner } from "../components/session/SessionBanner";
 
 interface SessionProps {
   session: Session;
@@ -20,23 +22,21 @@ export const getStaticProps: GetStaticProps = () => {
 
 const Home: NextPage<SessionProps> = ({ session }: SessionProps) => {
   return (
-    <VStack align="center">
+    <>
       <SessionBanner banner={session.banner} />
-      <Flex
-        direction={["column-reverse", "row"]}
-        px="15%"
-        py="75px"
-        gap={["50px", "15%"]}
+      <VStack
+        align="flex-start"
+        px={{ base: "20px", md: "100px" }}
+        paddingTop={{ base: "0px", lg: "50px" }}
+        paddingBottom="50px"
+        gap={{ base: "10px", lg: "30px" }}
       >
-        <SessionDescription
-          title={session.title}
-          description={session.description}
-        />  
-        <Box flexShrink="0">
-          <SessionInfo date={session.date} speakers={session.speakers} />
-        </Box>
-      </Flex>
-    </VStack>
+        {/* <Icon as={BsArrowUpLeft} color="white" fontSize="70" /> */}
+        <SessionTitle title={session.title} />
+        <SessionInfo speakers={session.speakers} date={session.date} />
+        <RequestSeatButton />
+      </VStack>
+    </>
   );
 };
 

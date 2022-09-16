@@ -1,11 +1,7 @@
 export const Myelin = () => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="85"
-      height="24"
-    >
-      <g transform="scale(0.05)">
+    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="24">
+      <g transform="scale(0.05) translate(-500 0)">
         <path
           fill="#ffffff"
           stroke="none"
