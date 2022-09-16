@@ -1,42 +1,43 @@
-import { Box, VStack } from "@chakra-ui/layout";
-import type { GetStaticProps, NextPage } from "next";
-import { RequestSeatButton } from "../components/ui/Buttons/RequestSeatButton";
-import { BsArrowUpLeft } from "react-icons/bs";
+import { Button } from "@chakra-ui/button";
+import { Center, Heading, Text, VStack } from "@chakra-ui/layout";
+import { NextPage } from "next";
+import { Myelin } from "../components/icons/Myelin";
+import { useRouter } from "next/router";
 
-import sessions from "../json/sessions.json";
-import { Session } from "../types";
-import { SessionInfo } from "../components/session/SessionInfo";
-import { SessionTitle } from "../components/session/SessionTitle";
-import { SessionBanner } from "../components/session/SessionBanner";
+const Home: NextPage = () => {
+  const router = useRouter();
 
-interface SessionProps {
-  session: Session;
-}
-
-export const getStaticProps: GetStaticProps = () => {
-  const session: Session = sessions[0];
-  return {
-    props: { session },
-  };
-};
-
-const Home: NextPage<SessionProps> = ({ session }: SessionProps) => {
   return (
-    <>
-      <SessionBanner banner={session.banner} />
-      <VStack
-        align="flex-start"
-        px={{ base: "20px", md: "100px" }}
-        paddingTop={{ base: "0px", lg: "50px" }}
-        paddingBottom="50px"
-        gap={{ base: "10px", lg: "30px" }}
-      >
-        {/* <Icon as={BsArrowUpLeft} color="white" fontSize="70" /> */}
-        <SessionTitle title={session.title} />
-        <SessionInfo speakers={session.speakers} date={session.date} />
-        <RequestSeatButton />
+    <Center minW="100%" minH="100vh" position="absolute" top="0">
+      <VStack gap="30px" padding="25px">
+        <Myelin size="sm" />
+        <Heading
+          fontSize={{ base: "40", md: "60" }}
+          textAlign={{ base: "center", md: "left" }}
+        >
+          Myelin Sessions
+        </Heading>
+        <Text
+          fontSize={{ base: "15", md: "20" }}
+          fontWeight="100"
+          align="center"
+        >
+          Myelin Sessions are exclusive, intimate, online encounters with top
+          founders and investors.
+          <br /> A space to share all those things that you won&apos;t hear
+          about anywhere else.
+        </Text>
+        <Button
+          px="40px"
+          py="25px"
+          onClick={() => {
+            router.push("/session");
+          }}
+        >
+          Join
+        </Button>
       </VStack>
-    </>
+    </Center>
   );
 };
 
