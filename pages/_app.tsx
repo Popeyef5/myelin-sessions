@@ -36,6 +36,7 @@ const theme = extendTheme({
     Text,
     Heading,
   },
+  breakpoints
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
