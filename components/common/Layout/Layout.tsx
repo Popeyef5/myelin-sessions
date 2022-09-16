@@ -10,7 +10,6 @@ export const Layout = ({ children }: FlexProps) => {
         <title>Myelin Sessions</title>
         <meta name="description" content="Intimate encounters about the future with top founders and investors" />
       </Head>
-      <Header />
       <Box flexGrow="1">
         <main>{children}</main>
       </Box>
