@@ -31,7 +31,7 @@ export const SessionBanner = ({ banner }: BannerProps) => {
             bottom="0"
             left="0"
             bg="rgba(0, 0, 0, 0.35)"
-            transform={{base: "translate3d(0, 0, 1px)"}}
+            transform={{ base: "translate3d(0, 0, 1px)" }}
           />
         </Box>
       </AspectRatio>
