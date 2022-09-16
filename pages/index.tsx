@@ -22,7 +22,7 @@ const Home: NextPage = () => {
         >
           Myelin Sessions are exclusive, intimate, online encounters with top
           founders and investors.
-          <br /> A space to share all those things that you won't hear about
+          <br /> A space to share all those things that you won&apos;t hear about
           anywhere else.
         </Text>
         <NextLink href="/session">
