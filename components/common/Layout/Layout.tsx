@@ -9,7 +9,7 @@ export const Layout = ({ children }: FlexProps) => {
       <Head>
         <title>Myelin Sessions</title>
         <meta name="description" content="Intimate encounters about the future with top founders and investors" />
-        <meta property="og:title" content="short title of your website/webpage" />
+        <meta property="og:title" content="Myelin Sessions" />
         <meta property="og:url" content="https://sessions.myelin.vc/" />
         <meta property="og:description" content="Intimate encounters about the future with top founders and investors" />
       </Head>
