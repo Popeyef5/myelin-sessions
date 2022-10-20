@@ -34,7 +34,7 @@ const breakpoints = {
 const theme = extendTheme({
   components: {
     Text,
-    Heading,
+    Heading
   },
   breakpoints
 });

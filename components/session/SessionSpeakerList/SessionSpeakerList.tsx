@@ -44,7 +44,7 @@ const SpeakerBullet = ({ s }: SpeakerBulletProps) => {
 };
 
 interface SpeakerListProps {
-  speakers: Speaker[];
+  speakers?: Speaker[];
 }
 
 export const SessionSpeakerList = ({ speakers }: SpeakerListProps) => {
@@ -56,10 +56,10 @@ export const SessionSpeakerList = ({ speakers }: SpeakerListProps) => {
     >
       <Text fontWeight="400" fontSize={{ base: "20", lg: "25" }} zIndex="10">
         {" "}
-        Speakers:{" "}
+        Speakers:{" "}{speakers ? "" : "TBD"}
       </Text>
       <VStack align="flex-start" pt="15px" gap="15px">
-        {speakers.map((s, i) => {
+        {speakers?.map((s, i) => {
           return <SpeakerBullet s={s} key={i} />;
         })}
       </VStack>

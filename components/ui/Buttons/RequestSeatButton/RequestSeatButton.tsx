@@ -54,14 +54,14 @@ export const RequestSeatButton = () => {
           px="25px"
           py={{ base: "25px", lg: "30px" }}
           bg="white"
-          // onClick={onOpen}
-          isDisabled
+          onClick={onOpen}
+          // isDisabled
         >
           <HStack>
-            {/* <Icon as={MdAddCircleOutline} color="black" fontSize="20" /> */}
+            <Icon as={MdAddCircleOutline} color="black" fontSize="20" />
             <Text color="black" fontSize={{ base: "15", lg: "20" }}>
-              {/* Request Seat */}
-              OUT OF TICKETS
+              Request Seat
+              {/* OUT OF TICKETS */}
             </Text>
           </HStack>
         </Button>

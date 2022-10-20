@@ -14,8 +14,14 @@ export interface Speaker {
 
 export interface Session {
   id: number;
-  speakers: Speaker[];
+  speakers?: Speaker[];
   title: string;
   date: string;
   banner: string;
+}
+
+export interface Season {
+  id: number;
+  title: string;
+  sessions?: Session[];
 }

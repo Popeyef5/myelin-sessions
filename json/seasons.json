@@ -1,0 +1,100 @@
+[
+  {
+    "id": 0,
+    "title": "Life in the Future",
+    "sessions": [
+      {
+        "id": 0,
+        "title": "The Future of Food",
+        "date": "Nov. 10th, 2022. 12.30h EST",
+        "banner": "/0/banner.png",
+        "speakers": [
+          {
+            "name": "Antoine Hubert",
+            "role": "Founder & CEO",
+            "institution": {
+              "name": "Ynsect",
+              "site": "https://ynsect.com"
+            },
+            "picture": "/0/benja.jpeg"
+          },
+          {
+            "name": "Mateo Marietti",
+            "role": "Founder & CEO",
+            "institution": {
+              "name": "CookUnity",
+              "site": "https://cookunity.com"
+            },
+            "picture": "/0/franco.jpeg"
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "title": "The Future of Housing",
+        "date": "Dec. 21st, 2022",
+        "banner": "/1/banner.png",
+        "speakers": [
+          {
+            "name": "Jeff Wilson",
+            "role": "Founder & CEO",
+            "institution": {
+              "name": "Jupe",
+              "site": "https://jupe.com"
+            },
+            "picture": "/0/benja.jpeg"
+          },
+          {
+            "name": "Alexis Rivas",
+            "role": "Founder & CEO",
+            "institution": {
+              "name": "Cover",
+              "site": "https://buildcover.com"
+            },
+            "picture": "/0/franco.jpeg"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "The Future of Health",
+        "date": "Jan. 2023",
+        "banner": "/2/banner.png"
+      },
+      {
+        "id": 3,
+        "title": "The Future of Logistics ",
+        "date": "Feb. 2023",
+        "banner": "/3/banner.png",
+        "speakers": [
+          {
+            "name": "Canon Reeves",
+            "role": "Founder & CTO",
+            "institution": {
+              "name": "Pipedream",
+              "site": "https://pipedream.com"
+            },
+            "picture": "/0/benja.jpeg"
+          },
+          {
+            "name": "Jason Hu",
+            "role": "Founder & CEO",
+            "institution": {
+              "name": "FlyBy",
+              "site": "https://flybydev     .com"
+            },
+            "picture": "/0/franco.jpeg"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "title": "Insights from the Frontier"
+  },
+  {
+    "id": 2,
+    "title": "Infrastructure of Tomorrow"
+  }
+]

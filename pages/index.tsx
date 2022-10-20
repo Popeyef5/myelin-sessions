@@ -31,7 +31,7 @@ const Home: NextPage = () => {
           px="40px"
           py="25px"
           onClick={() => {
-            router.push("/session");
+            router.push("/seasons");
           }}
         >
           Join

@@ -1,6 +1,8 @@
 import { Flex, Text } from "@chakra-ui/layout";
 import { Myelin } from "../../icons/Myelin";
 
+import Link from "next/link";
+
 export const Header = () => {
   return (
     <Flex
@@ -10,7 +12,9 @@ export const Header = () => {
       zIndex="10"
     >
       <Myelin />
-      <Text>Myelin Sessions</Text>
+      <Link href="/">
+        <Text cursor="pointer">Myelin Sessions</Text>
+      </Link>
     </Flex>
   );
 };

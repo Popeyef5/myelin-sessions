@@ -4,7 +4,7 @@ import { SessionSpeakerList } from "../SessionSpeakerList";
 
 interface InfoProps {
   date: string;
-  speakers: Speaker[];
+  speakers?: Speaker[];
 }
 
 export const SessionInfo = ({ date, speakers }: InfoProps) => {
