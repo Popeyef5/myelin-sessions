@@ -13,6 +13,12 @@ const Text: ComponentStyleConfig = {
     fontFamily: "'JetBrains Mono', monospace",
     fontWeight: "regular",
   },
+  variants: {
+    profile: {
+      fontSize: "20px",
+      fontWeight: "regular",
+    },
+  },
 };
 
 const Heading: ComponentStyleConfig = {
@@ -23,20 +29,38 @@ const Heading: ComponentStyleConfig = {
   },
 };
 
+const Input: ComponentStyleConfig = {
+  baseStyle: {
+    field: {
+      color: "white",
+      fontFamily: "'JetBrains Mono', monospace",
+    },
+  },
+};
+
+const Textarea: ComponentStyleConfig = {
+  baseStyle: {
+    color: "white",
+    fontFamily: "'JetBrains Mono', monospace",
+  },
+};
+
 const breakpoints = {
-  sm: '320px',
-  md: '768px',
-  lg: '960px',
-  xl: '1200px',
-  '2xl': '1536px',
-}
+  sm: "320px",
+  md: "768px",
+  lg: "960px",
+  xl: "1200px",
+  "2xl": "1536px",
+};
 
 const theme = extendTheme({
   components: {
     Text,
-    Heading
+    Heading,
+    Input,
+    Textarea,
   },
-  breakpoints
+  breakpoints,
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
