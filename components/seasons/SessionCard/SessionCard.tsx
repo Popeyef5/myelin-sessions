@@ -1,15 +1,15 @@
-import { AspectRatio, Box, Center, Text } from "@chakra-ui/layout";
-import { Session } from "../../../types";
+import { AspectRatio, Box, Center, Spacer, Text } from "@chakra-ui/layout";
 import Link from "next/link";
 import Image from "next/image";
+import { Episode, Institution, Speaker } from ".prisma/client";
 
 interface SessionCardProps {
-  session: Session;
+  session: Episode & { speakers?: (Speaker & { institution: Institution })[] };
 }
 
 export const SessionCard = ({ session }: SessionCardProps) => {
   return (
-    <Link href={{ pathname: "/session/[id]", query: { id: session.id } }}>
+    <Link href={{ pathname: "/session/[id]", query: { id: session.slug } }}>
       <Box cursor="pointer">
         <AspectRatio
           width={{ base: "100%" }}
@@ -20,7 +20,7 @@ export const SessionCard = ({ session }: SessionCardProps) => {
           overflow="hidden"
         >
           <Box height="100%" width="100%">
-            {session.banner.endsWith(".mp4") ? (
+            {session.banner?.endsWith(".mp4") ? (
               <video
                 autoPlay
                 playsInline
@@ -30,7 +30,7 @@ export const SessionCard = ({ session }: SessionCardProps) => {
                 style={{ width: "100%", height: "100%" }}
               />
             ) : (
-              <Image src={session.banner} layout="fill" />
+              <Image src={session.banner || ""} layout="fill" />
             )}
             <Box
               position="absolute"
@@ -58,18 +58,32 @@ export const SessionCard = ({ session }: SessionCardProps) => {
           borderRadius="0 0 30px 30px"
           bg="linear-gradient(to bottom, #ffffff1c,#ffffff0c)"
           padding="24px"
+          display="flex"
+          flexDir="column"
         >
+          <Text noOfLines={3}>
+            <>
+              Speakers:{" "}
+              {session.speakers?.length ? (
+                session.speakers
+                  .map(
+                    (s) =>
+                      s.name +
+                      (s.institution ? " (" + s.institution.name + ")" : "")
+                  )
+                  .join(" & ")
+              ) : (
+                <>TBD
+              <br />
+              </>
+              )}
+              <br />
+              <br />
+            </>
+          </Text>
+          <Spacer/>
           <Text>
-            Speakers:{" "}
-            {session.speakers
-              ? session.speakers.map(
-                (s) =>
-                  s.name +
-                  (s.institution ? " (" + s.institution.name + ")" : "")
-              )
-              .join(" & ") : <>TBD<br/></>}
-            <br />
-            Date: {session.date}
+            <>Date: {session.date || "TBD"}</>
           </Text>
         </Box>
       </Box>

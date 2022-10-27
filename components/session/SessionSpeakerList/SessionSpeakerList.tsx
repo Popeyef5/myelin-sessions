@@ -6,12 +6,12 @@ import {
   UnorderedList,
   VStack,
 } from "@chakra-ui/layout";
-import { Speaker } from "../../../types";
 import NextLink from "next/link";
 import { Avatar } from "@chakra-ui/avatar";
+import { Institution, Speaker } from ".prisma/client";
 
 interface SpeakerBulletProps {
-  s: Speaker;
+  s: Speaker & {institution?: Institution};
 }
 
 const SpeakerBullet = ({ s }: SpeakerBulletProps) => {
@@ -23,7 +23,7 @@ const SpeakerBullet = ({ s }: SpeakerBulletProps) => {
         {s.role ? ", " + s.role : ""}
         {s.institution ? " @ " : ""}
         {s.institution ? (
-          <NextLink href={s.institution.site} passHref target="_blank">
+          <NextLink href={s.institution.site!} passHref target="_blank">
             <Link
               target="_blank"
               rel="noreferrer nooprener"

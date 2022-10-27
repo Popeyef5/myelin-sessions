@@ -1,10 +1,10 @@
 [
   {
-    "id": 0,
+    "id": "0",
     "title": "Life in the Future",
-    "sessions": [
+    "episodes": [
       {
-        "id": 0,
+        "id": "0",
         "title": "The Future of Food",
         "date": "Nov. 10th, 2022. 12.30h EST",
         "banner": "/0/banner.png",
@@ -30,7 +30,7 @@
         ]
       },
       {
-        "id": 1,
+        "id": "1",
         "title": "The Future of Housing",
         "date": "Dec. 21st, 2022",
         "banner": "/1/banner.png",
@@ -56,13 +56,13 @@
         ]
       },
       {
-        "id": 2,
+        "id": "2",
         "title": "The Future of Health",
         "date": "Jan. 2023",
         "banner": "/2/banner.png"
       },
       {
-        "id": 3,
+        "id": "3",
         "title": "The Future of Logistics ",
         "date": "Feb. 2023",
         "banner": "/3/banner.png",
@@ -90,11 +90,11 @@
     ]
   },
   {
-    "id": 1,
+    "id": "1",
     "title": "Insights from the Frontier"
   },
   {
-    "id": 2,
+    "id": "2",
     "title": "Infrastructure of Tomorrow"
   }
 ]

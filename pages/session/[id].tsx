@@ -3,46 +3,54 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { RequestSeatButton } from "../../components/ui/Buttons/RequestSeatButton";
 import { BsArrowUpLeft } from "react-icons/bs";
 
-import seasons from "../../json/seasons.json";
-import { Session } from "../../types";
 import { SessionInfo } from "../../components/session/SessionInfo";
 import { SessionTitle } from "../../components/session/SessionTitle";
 import { SessionBanner } from "../../components/session/SessionBanner";
-import { Header } from "../../components/common/Header";
 import Icon from "@chakra-ui/icon";
-import { getAllSessionsPaths } from "../../lib/util";
+import { getAllSessionsPaths } from "../../lib/prismadb";
 
 import Link from "next/link";
+import { Application, Episode, PrismaClient, Speaker } from ".prisma/client";
+
+import { useRouter } from "next/router";
 
 interface SessionParams {
   session_id: number;
   season_id: number;
 }
 
-interface SessionProps {
-  session: Session;
+interface EpisodeProps {
+  episode?: Episode & {speakers?: Speaker[]} & {applications?: Application[]};
 }
 
 export async function getStaticPaths() {
-  const paths = getAllSessionsPaths();
-  console.log(paths);
+  const paths = await getAllSessionsPaths();
   return {
     paths,
     fallback: false,
   };
 }
 
-export const getStaticProps: GetStaticProps = ({ params }) => {
-  const session: Session = seasons[0].sessions[params.id]; //TODO: replace by appropriate findSessionByID function
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  if (!params) return { props: { episode: null } };
+  const prisma = new PrismaClient();
+  let slug = Array.isArray(params.id) ? params.id[0] : params.id;
+  const episode = await prisma.episode.findUnique({ where: { slug }, include: {applications: true, speakers: {include: {institution: true}}} });
   return {
-    props: { session },
+    props: { episode },
   };
 };
 
-const Session: NextPage<SessionProps> = ({ session }: SessionProps) => {
+const Session: NextPage<EpisodeProps> = ({ episode }: EpisodeProps) => {
+  const router = useRouter();
+  if (!episode) {
+    router.push("/seasons");
+    return <></>;
+  }
+
   return (
     <>
-      <SessionBanner banner={session.banner} />
+      <SessionBanner banner={episode.banner!} />
       <Flex
         flexGrow="1"
         flexDirection="column"
@@ -52,13 +60,19 @@ const Session: NextPage<SessionProps> = ({ session }: SessionProps) => {
         paddingBottom="50px"
       >
         <Link href="/seasons">
-          <Icon as={BsArrowUpLeft} color="white" fontSize="50" zIndex="5" cursor="pointer"/>
+          <Icon
+            as={BsArrowUpLeft}
+            color="white"
+            fontSize="50"
+            zIndex="5"
+            cursor="pointer"
+          />
         </Link>
-        <SessionTitle title={session.title} />
+        <SessionTitle title={episode.title} />
         <Spacer />
-        <SessionInfo speakers={session.speakers} date={session.date} />
+        <SessionInfo speakers={episode.speakers} date={episode.date} />
         <Spacer />
-        <RequestSeatButton />
+        <RequestSeatButton episode={episode} />
       </Flex>
     </>
   );

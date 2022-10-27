@@ -7,6 +7,8 @@ import { Layout } from "../components/common/Layout/Layout";
 import type { ComponentStyleConfig } from "@chakra-ui/theme";
 import { extendTheme } from "@chakra-ui/react";
 
+import { SessionProvider } from "next-auth/react";
+
 const Text: ComponentStyleConfig = {
   baseStyle: {
     color: "white",
@@ -45,6 +47,14 @@ const Textarea: ComponentStyleConfig = {
   },
 };
 
+const Button: ComponentStyleConfig = {
+  variants: {
+    login: {
+      width: "200px"
+    }
+  }
+}
+
 const breakpoints = {
   sm: "320px",
   md: "768px",
@@ -59,17 +69,20 @@ const theme = extendTheme({
     Heading,
     Input,
     Textarea,
+    Button
   },
   breakpoints,
 });
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <ChakraProvider theme={theme}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ChakraProvider>
+    <SessionProvider session={session}>
+      <ChakraProvider theme={theme}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ChakraProvider>
+    </SessionProvider>
   );
 }
 

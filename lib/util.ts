@@ -1,11 +1,11 @@
-import seasons from "../json/seasons.json";
+import { User } from ".prisma/client";
 
-export function getAllSessionsPaths() {
-  return seasons[0].sessions.map((session) => {
-    return {
-      params: {
-        id: session.id.toString(),
-      },
-    };
-  });
+export function isProfileEmpty(user: Partial<User>) {
+  return (
+    !(user.company && user.role) &&
+    !user.twitter &&
+    !user.github &&
+    !user.linkedin &&
+    !user.other
+  );
 }

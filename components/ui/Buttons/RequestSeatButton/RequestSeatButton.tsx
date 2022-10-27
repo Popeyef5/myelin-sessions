@@ -1,46 +1,73 @@
 import { Button } from "@chakra-ui/button";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { useDisclosure } from "@chakra-ui/hooks";
 import Icon from "@chakra-ui/icon";
-import { Input } from "@chakra-ui/input";
-import { Center, HStack, Text, VStack } from "@chakra-ui/layout";
+import { Center, HStack, Text } from "@chakra-ui/layout";
+import { useSession } from "next-auth/react";
+import { MdAddCircleOutline } from "react-icons/md";
 import {
   Modal,
-  ModalOverlay,
-  ModalHeader,
-  ModalContent,
-  ModalCloseButton,
   ModalBody,
+  ModalCloseButton,
+  ModalContent,
   ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from "@chakra-ui/modal";
-import axios from "axios";
-import { FormEvent, FormEventHandler, useState } from "react";
-import { MdAddCircleOutline } from "react-icons/md";
+import { useDisclosure } from "@chakra-ui/hooks";
+import { isProfileEmpty } from "../../../../lib/util";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { Application, Episode } from ".prisma/client";
 
-export const RequestSeatButton = () => {
+interface RequestSeatButtonProps {
+  episode: Episode & { applications?: Application[] };
+}
+
+export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
-  const [status, setStatus] = useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [social, setSocial] = useState("");
-  const [company, setCompany] = useState("");
+  const [isRegistered, setIsRegistered] = useState(
+    episode.applications &&
+      status === "authenticated" &&
+      episode.applications.map((a) => a.userId).includes(session!.user.id)
+  );
 
-  const subscribe: FormEventHandler<HTMLFormElement> = async (e: FormEvent) => {
-    e.preventDefault();
+  const [isSending, setIsSending] = useState(false);
+
+  const requestSeat = async () => {
+    if (!session) return;
     try {
-      setStatus("");
-      await axios.post("/api/subscribe", {
-        email,
-        name,
-        company,
-        social,
+      const body = {
+        userId: session.user.id,
+        episodeId: episode.id,
+      };
+      setIsSending(true);
+      const response = await fetch("/api/application", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
       });
-      onClose();
-    } catch (e) {
-      setStatus(
-        "Oops. An unexpected error ocurred.\n Remember that you can only subscribe once."
-      );
+      if (!response.ok) {
+        await router.push("/error");
+      }
+
+      const newApplication: Application = await response.json();
+      episode.applications?.push(newApplication);
+
+      setIsSending(false);
+      setIsRegistered(true);
+    } catch (error) {
+      await router.push("/error");
+    }
+  };
+
+  const conditionalRequest = () => {
+    if (!session) return;
+    if (isProfileEmpty(session.user)) {
+      onOpen();
+    } else {
+      requestSeat();
     }
   };
 
@@ -54,89 +81,66 @@ export const RequestSeatButton = () => {
           px="25px"
           py={{ base: "25px", lg: "30px" }}
           bg="white"
-          onClick={onOpen}
-          // isDisabled
+          onClick={conditionalRequest}
+          isDisabled={session === null || isRegistered}
+          isLoading={isSending}
         >
-          <HStack>
-            <Icon as={MdAddCircleOutline} color="black" fontSize="20" />
+          {session ? (
+            isRegistered ? (
+              <Text color="black" fontSize={{ base: "15", lg: "20" }}>
+                Seat requested
+              </Text>
+            ) : (
+              <HStack>
+                <Icon as={MdAddCircleOutline} color="black" fontSize="20" />
+                <Text color="black" fontSize={{ base: "15", lg: "20" }}>
+                  Request Seat
+                </Text>
+              </HStack>
+            )
+          ) : (
             <Text color="black" fontSize={{ base: "15", lg: "20" }}>
-              Request Seat
-              {/* OUT OF TICKETS */}
+              Log in to request seat
             </Text>
-          </HStack>
+          )}
         </Button>
-      </Center>
 
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        isCentered={true}
-        onCloseComplete={() => {
-          setStatus("");
-        }}
-      >
-        <ModalOverlay />
-        <ModalContent bg="black" p="25px">
-          <ModalHeader></ModalHeader>
-          <ModalCloseButton color="grey" />
-          <form onSubmit={subscribe}>
-            <ModalBody>
-              <VStack>
-                <FormControl>
-                  <FormLabel>
-                    <Text>Name</Text>
-                  </FormLabel>
-                  <Input
-                    required
-                    type="text"
-                    color="white"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>
-                    <Text>Company</Text>
-                  </FormLabel>
-                  <Input
-                    required
-                    type="text"
-                    color="white"
-                    onChange={(e) => setCompany(e.target.value)}
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>
-                    <Text>Email</Text>
-                  </FormLabel>
-                  <Input
-                    required
-                    type="email"
-                    color="white"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>
-                    <Text>Twitter/GitHub/Other (opt)</Text>
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    color="white"
-                    onChange={(e) => setSocial(e.target.value)}
-                  />
-                </FormControl>
-              </VStack>
+        <Modal isOpen={isOpen} onClose={onClose} isCentered>
+          <ModalOverlay />
+          <ModalContent bg="#000f14" border="2px solid white">
+            <ModalBody padding="25px">
+              <Text>
+                Your profile data is empty. As seats are limited, we'll choose
+                the attendees based on the information provided to us. You can
+                apply anyways and update your data later or you can fill the
+                information first.
+              </Text>
             </ModalBody>
 
-            <ModalFooter>
-              <Button variant="outline" type="submit">
-                <Text>Apply</Text>
+            <ModalFooter justifyContent="space-between">
+              <Button
+                bg="#00dcda"
+                color="white"
+                mr={3}
+                onClick={() => {
+                  onClose();
+                  requestSeat();
+                }}
+              >
+                Request anyways
+              </Button>
+              <Button
+                onClick={() => {
+                  router.push("/profile");
+                }}
+              >
+                {" "}
+                Fill profile{" "}
               </Button>
             </ModalFooter>
-            {status ? <Text align="center">{status}</Text> : <></>}
-          </form>
-        </ModalContent>
-      </Modal>
+          </ModalContent>
+        </Modal>
+      </Center>
     </>
   );
 };

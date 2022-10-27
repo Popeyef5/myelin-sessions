@@ -1,27 +1,28 @@
-import { StaticImageData } from "next/image";
-
 export interface Institution {
+  id: string;
   name: string;
   site: string;
 }
 
 export interface Speaker {
+  id: string;
   name: string;
   role?: string;
   institution?: Institution;
   picture?: string;
 }
 
-export interface Session {
-  id: number;
-  speakers?: Speaker[];
+export interface Episode {
+  id: string;
+  speakers: Speaker[];
   title: string;
   date: string;
   banner: string;
+  thumbnail: string;
 }
 
 export interface Season {
-  id: number;
+  id: string;
   title: string;
-  sessions?: Session[];
+  episodes: Episode[];
 }
