@@ -110,7 +110,7 @@ export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
           <ModalContent bg="#000f14" border="2px solid white">
             <ModalBody padding="25px">
               <Text>
-                Your profile data is empty. As seats are limited, we'll choose
+                Your profile data is empty. As seats are limited, we&apos;ll choose
                 the attendees based on the information provided to us. You can
                 apply anyways and update your data later or you can fill the
                 information first.

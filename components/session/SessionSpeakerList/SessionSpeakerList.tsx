@@ -22,8 +22,8 @@ const SpeakerBullet = ({ s }: SpeakerBulletProps) => {
         {s.name}
         {s.role ? ", " + s.role : ""}
         {s.institution ? " @ " : ""}
-        {s.institution ? (
-          <NextLink href={s.institution.site!} passHref target="_blank">
+        {s.institution?.site ? (
+          <NextLink href={s.institution.site} passHref target="_blank">
             <Link
               target="_blank"
               rel="noreferrer nooprener"
