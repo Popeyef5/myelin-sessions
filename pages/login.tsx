@@ -108,7 +108,7 @@ const Login = () => {
         >
           Github
         </Button>
-        <Button
+        {/* <Button
           w="250px"
           colorScheme="twitter"
           leftIcon={<FaTwitter />}
@@ -116,7 +116,7 @@ const Login = () => {
           isLoading={called === "twitter"}
         >
           Twitter
-        </Button>
+        </Button> */}
       </VStack>
     </Center>
   );
