@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 
 import useSWR from "swr";
 import { Application } from ".prisma/client";
+import Script from "next/script";
 
 export const AppContext = React.createContext<{
   applications: Application[];
@@ -22,8 +23,8 @@ async function fetcher<JSON = any>(
   input: RequestInfo,
   init?: RequestInit
 ): Promise<JSON> {
-  const res = await fetch(input, init)
-  return res.json()
+  const res = await fetch(input, init);
+  return res.json();
 }
 
 const Text: ComponentStyleConfig = {
@@ -93,7 +94,10 @@ const theme = extendTheme({
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [applications, setApplications] = useState<Application[]>([]);
-  const { data } = useSWR<{result: Application[]}>("/api/application", fetcher);
+  const { data } = useSWR<{ result: Application[] }>(
+    "/api/application",
+    fetcher
+  );
   useEffect(() => {
     if (data) {
       setApplications(data.result);
@@ -101,15 +105,33 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   }, [data]);
 
   return (
-    <AppContext.Provider value={{ applications, setApplications }}>
-      <SessionProvider session={session}>
-        <ChakraProvider theme={theme}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </ChakraProvider>
-      </SessionProvider>
-    </AppContext.Provider>
+    <>
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-47T4Q5FSDJ"
+      />
+      <Script
+        id="gtag-base"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-47T4Q5FSDJ');
+      `,
+        }}
+      />
+      <AppContext.Provider value={{ applications, setApplications }}>
+        <SessionProvider session={session}>
+          <ChakraProvider theme={theme}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ChakraProvider>
+        </SessionProvider>
+      </AppContext.Provider>
+    </>
   );
 }
 
