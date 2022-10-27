@@ -37,7 +37,10 @@ export default NextAuth({
     }),
   ],
   pages: {
+    signOut: "/seasons",
     verifyRequest: "/auth/verify",
+    error: "/error",
+    newUser: "/profile"
   },
   callbacks: {
     async session({ session, token, user }) {

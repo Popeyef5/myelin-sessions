@@ -56,7 +56,7 @@ export const SessionSpeakerList = ({ speakers }: SpeakerListProps) => {
     >
       <Text fontWeight="400" fontSize={{ base: "20", lg: "25" }} zIndex="10">
         {" "}
-        Speakers:{" "}{speakers ? "" : "TBD"}
+        Speakers:{" "}{speakers?.length ? "" : "TBD"}
       </Text>
       <VStack align="flex-start" pt="15px" gap="15px">
         {speakers?.map((s, i) => {

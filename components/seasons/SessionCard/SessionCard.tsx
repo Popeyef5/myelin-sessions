@@ -2,12 +2,16 @@ import { AspectRatio, Box, Center, Spacer, Text } from "@chakra-ui/layout";
 import Link from "next/link";
 import Image from "next/image";
 import { Episode, Institution, Speaker } from ".prisma/client";
+import { formatDate } from "../../../lib/dates";
 
 interface SessionCardProps {
-  session: Episode & { speakers?: (Speaker & { institution: Institution })[] };
+  session: Episode & { date: string } & {
+    speakers?: (Speaker & { institution: Institution })[];
+  };
 }
 
 export const SessionCard = ({ session }: SessionCardProps) => {
+  const date = new Date(session.date);
   return (
     <Link href={{ pathname: "/session/[id]", query: { id: session.slug } }}>
       <Box cursor="pointer">
@@ -30,7 +34,11 @@ export const SessionCard = ({ session }: SessionCardProps) => {
                 style={{ width: "100%", height: "100%" }}
               />
             ) : (
-              <Image src={session.banner || ""} layout="fill" alt="Sessiob banner"/>
+              <Image
+                src={session.banner || ""}
+                layout="fill"
+                alt="Sessiob banner"
+              />
             )}
             <Box
               position="absolute"
@@ -48,7 +56,7 @@ export const SessionCard = ({ session }: SessionCardProps) => {
               bg="transparent"
               px="24px"
             >
-              <Text fontSize="46px" fontWeight="700">
+              <Text fontSize={{ base: "33px", lg: "46px" }} fontWeight="700">
                 {session.title}
               </Text>
             </Center>
@@ -60,8 +68,9 @@ export const SessionCard = ({ session }: SessionCardProps) => {
           padding="24px"
           display="flex"
           flexDir="column"
+          minH="150px"
         >
-          <Text noOfLines={3}>
+          <Text noOfLines={4}>
             <>
               Speakers:{" "}
               {session.speakers?.length ? (
@@ -73,17 +82,13 @@ export const SessionCard = ({ session }: SessionCardProps) => {
                   )
                   .join(" & ")
               ) : (
-                <>TBD
-              <br />
-              </>
+                <>TBD</>
               )}
-              <br />
-              <br />
             </>
           </Text>
-          <Spacer/>
-          <Text>
-            <>Date: {session.date || "TBD"}</>
+          <Spacer />
+          <Text noOfLines={1}>
+            <>Date: {formatDate(date) || "TBD"}</>
           </Text>
         </Box>
       </Box>
