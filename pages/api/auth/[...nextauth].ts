@@ -37,6 +37,7 @@ export default NextAuth({
     }),
   ],
   pages: {
+    signIn: "/login",
     signOut: "/seasons",
     verifyRequest: "/auth/verify",
     error: "/error",

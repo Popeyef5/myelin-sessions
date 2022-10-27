@@ -22,10 +22,11 @@ const Home: NextPage = () => {
           fontWeight="100"
           align="center"
         >
-          Myelin Sessions are exclusive, intimate, online encounters with top
+         Monthly zoom sessions for bold builders to discuss the future of everything.
+{/* Limited seats, apply now. Myelin Sessions are exclusive, intimate, online encounters with top
           founders and investors.
           <br /> A space to share all those things that you won&apos;t hear
-          about anywhere else.
+          about anywhere else. */}
         </Text>
         <Button
           px="40px"

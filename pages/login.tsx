@@ -2,11 +2,14 @@ import { Button, IconButton } from "@chakra-ui/button";
 import Icon from "@chakra-ui/icon";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { Center, Text, VStack } from "@chakra-ui/layout";
+import { useToast } from "@chakra-ui/toast";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { FaEnvelope, FaGithub, FaGoogle, FaTwitter } from "react-icons/fa";
 import { IoMdClose, IoMdCheckmark } from "react-icons/io";
+
+export type SignInErrorTypes = "OAuthAccountNotLinked" | "default";
 
 const Login = () => {
   const { data: session, status } = useSession();
@@ -17,6 +20,34 @@ const Login = () => {
   const [openEmail, setOpenEmail] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
 
+  const toast = useToast();
+
+  const errors: Record<SignInErrorTypes, string> = {
+    OAuthAccountNotLinked:
+      "You already signed in using another provider. For safety, please use the same one or sign in using email.",
+    default:
+      "An error ocurred. If it persists, please contact us at sessions@myelin.vc.",
+  };
+
+  const errorType: SignInErrorTypes | undefined = router.query.error
+    ? router.query.error === "OAuthAccountNotLinked"
+      ? router.query.error
+      : "default"
+    : undefined;
+
+  const error = errorType && (errors[errorType] ?? errors.default);
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: "Error.",
+        description: error,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  }, [error]);
   if (status === "authenticated") {
     router.push("/");
     return <></>;
@@ -28,7 +59,7 @@ const Login = () => {
     if (provider !== "email") {
       signIn(provider);
     } else {
-      signIn(provider, {callbackUrl: "/seasons", email})
+      signIn(provider, { callbackUrl: "/seasons", email });
     }
   };
 

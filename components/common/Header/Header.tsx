@@ -33,9 +33,13 @@ export const Header = () => {
       {status === "loading" ? (
         <Spinner color="white" />
       ) : !session ? (
-        <Link href="/login">
-          <Button size={{base: "xs", lg: "md"}} >Sign up / Login</Button>
-        </Link>
+        asPath.startsWith("/login") ? (
+          <></>
+        ) : (
+          <Link href="/login">
+            <Button size={{ base: "xs", lg: "md" }}>Sign up / Login</Button>
+          </Link>
+        )
       ) : asPath === "/profile" ? (
         <></>
       ) : (
