@@ -15,11 +15,12 @@ import {
 import { useDisclosure } from "@chakra-ui/hooks";
 import { isProfileEmpty } from "../../../../lib/util";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Application, Episode } from ".prisma/client";
+import { AppContext } from "../../../../pages/_app";
 
 interface RequestSeatButtonProps {
-  episode: Episode & { applications?: Application[] };
+  episode: Episode;
 }
 
 export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
@@ -27,10 +28,12 @@ export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  const { applications, setApplications } = useContext(AppContext);
+
   const [isRegistered, setIsRegistered] = useState(
-    episode.applications &&
+    applications.length > 0 &&
       status === "authenticated" &&
-      episode.applications.map((a) => a.userId).includes(session!.user.id)
+      applications.map((a) => a.userId).includes(session!.user.id)
   );
 
   const [isSending, setIsSending] = useState(false);
@@ -53,7 +56,7 @@ export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
       }
 
       const newApplication: Application = await response.json();
-      episode.applications?.push(newApplication);
+      setApplications([...applications, newApplication])
 
       setIsSending(false);
       setIsRegistered(true);

@@ -8,6 +8,23 @@ import type { ComponentStyleConfig } from "@chakra-ui/theme";
 import { extendTheme } from "@chakra-ui/react";
 
 import { SessionProvider } from "next-auth/react";
+import React, { useEffect, useState } from "react";
+
+import useSWR from "swr";
+import { Application } from ".prisma/client";
+
+export const AppContext = React.createContext<{
+  applications: Application[];
+  setApplications: (value: Application[]) => void;
+}>({ applications: [], setApplications: (value: Application[]) => {} });
+
+async function fetcher<JSON = any>(
+  input: RequestInfo,
+  init?: RequestInit
+): Promise<JSON> {
+  const res = await fetch(input, init)
+  return res.json()
+}
 
 const Text: ComponentStyleConfig = {
   baseStyle: {
@@ -50,10 +67,10 @@ const Textarea: ComponentStyleConfig = {
 const Button: ComponentStyleConfig = {
   variants: {
     login: {
-      width: "200px"
-    }
-  }
-}
+      width: "200px",
+    },
+  },
+};
 
 const breakpoints = {
   sm: "320px",
@@ -69,20 +86,30 @@ const theme = extendTheme({
     Heading,
     Input,
     Textarea,
-    Button
+    Button,
   },
   breakpoints,
 });
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+  const [applications, setApplications] = useState<Application[]>([]);
+  const { data } = useSWR<Application[]>("/api/application", fetcher);
+  useEffect(() => {
+    if (data) {
+      setApplications(data);
+    }
+  }, [data]);
+
   return (
-    <SessionProvider session={session}>
-      <ChakraProvider theme={theme}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ChakraProvider>
-    </SessionProvider>
+    <AppContext.Provider value={{ applications, setApplications }}>
+      <SessionProvider session={session}>
+        <ChakraProvider theme={theme}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ChakraProvider>
+      </SessionProvider>
+    </AppContext.Provider>
   );
 }
 

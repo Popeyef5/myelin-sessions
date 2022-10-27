@@ -18,8 +18,6 @@ const Profile = () => {
       router.push("/");
     },
   });
-  
-  const bp = useBreakpointValue({ base: "base", lg: "lg" });
 
   const [name, setName] = useState(session?.user.name || null);
   const [company, setCompany] = useState(session?.user.company || null);
@@ -68,6 +66,7 @@ const Profile = () => {
         ...session.user,
         ...body,
       };
+      await router.push("/seasons");
     } catch (error) {
       await router.push("/error");
     }
@@ -77,29 +76,27 @@ const Profile = () => {
     return <></>;
   }
 
-
   return (
     <Flex
       flexDir="column"
       px={{ base: "30px", lg: "100px" }}
       flexGrow="1"
-      py={{ base: "50px", lg: "30px" }}
+      py={{ base: "70px", lg: "30px" }}
       gap={{ base: "10px", lg: "0" }}
     >
-      {bp === "lg" ? (
-        <Link href="/seasons">
-          <Icon
-            as={BsArrowUpLeft}
-            color="white"
-            fontSize="50"
-            zIndex="5"
-            cursor="pointer"
-          />
-        </Link>
-      ) : (
-        <></>
-      )}
-      <Heading fontSize={{ base: "60px", lg: "80px" }} paddingTop="20px">
+      <Link href="/seasons">
+        <Icon
+          as={BsArrowUpLeft}
+          color="white"
+          fontSize={{ base: "30", lg: "50" }}
+          zIndex="5"
+          cursor="pointer"
+        />
+      </Link>
+      <Heading
+        fontSize={{ base: "60px", lg: "80px" }}
+        paddingTop={{ base: "0", lg: "20px" }}
+      >
         Profile
       </Heading>
       <Text fontWeight="100" fontSize={{ base: "14px", lg: "20px" }}>

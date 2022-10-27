@@ -21,9 +21,7 @@ interface SessionParams {
 }
 
 interface EpisodeProps {
-  episode?: Episode & { speakers?: Speaker[] } & {
-    applications?: Application[];
-  };
+  episode?: Episode & { speakers?: Speaker[] };
 }
 
 export async function getStaticPaths() {
@@ -41,7 +39,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const episode = await prisma.episode.findUnique({
     where: { slug },
     include: {
-      applications: true,
       speakers: { include: { institution: true } },
     },
   });
@@ -52,7 +49,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 const Session: NextPage<EpisodeProps> = ({ episode }: EpisodeProps) => {
   const bp = useBreakpointValue({ base: "base", lg: "lg" });
-  
+
   const router = useRouter();
   if (!episode) {
     router.push("/seasons");
@@ -69,7 +66,7 @@ const Session: NextPage<EpisodeProps> = ({ episode }: EpisodeProps) => {
         px={{ base: "20px", md: "100px" }}
         paddingTop={{ base: "0px", lg: "30px" }}
         paddingBottom="50px"
-        gap={{base: "10px", lg: ""}}
+        gap={{ base: "10px", lg: "" }}
       >
         {bp === "lg" ? (
           <Link href="/seasons">
@@ -86,7 +83,10 @@ const Session: NextPage<EpisodeProps> = ({ episode }: EpisodeProps) => {
         )}
         <SessionTitle title={episode.title} />
         <Spacer />
-        <SessionInfo speakers={episode.speakers} date={episode.date?.toString()} />
+        <SessionInfo
+          speakers={episode.speakers}
+          date={episode.date?.toString()}
+        />
         <Spacer />
         <RequestSeatButton episode={episode} />
       </Flex>
