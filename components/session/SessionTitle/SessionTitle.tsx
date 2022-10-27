@@ -9,8 +9,9 @@ export const SessionTitle = ({ title }: TitleProps) => {
     <Center minW={{ base: "100%", lg: "0" }} minH={{base: "100vw", lg: "0"}}>
       <Heading
         maxW={{ base: "85%", md: "90%", lg: "100%" }}
-        fontSize={{ base: "38", sm: "45", md: "90", lg: "105", xl: "125", '2xl': "150" }}
+        fontSize={{ base: "38", sm: "50", md: "90", lg: "105", xl: "125", '2xl': "180" }}
         fontWeight="800"
+        lineHeight={{base: "80px", lg: "190px"}}
         letterSpacing={{ sm: "-0.25rem", lg: "-0.5rem" }}
         zIndex="3"
       >

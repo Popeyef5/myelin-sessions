@@ -1,4 +1,5 @@
 import { AspectRatio, Box } from "@chakra-ui/layout";
+import Image from "next/image";
 
 interface BannerProps {
   banner: string;
@@ -16,14 +17,18 @@ export const SessionBanner = ({ banner }: BannerProps) => {
         ratio={1}
       >
         <Box height="100%" width="100%">
-          <video
-            autoPlay
-            playsInline
-            muted
-            loop
-            src={banner}
-            style={{ width: "100%", height: "100%" }}
-          />
+          {banner.endsWith(".mp4") ? (
+            <video
+              autoPlay
+              playsInline
+              muted
+              loop
+              src={banner}
+              style={{ width: "100%", height: "100%" }}
+            />
+          ) : (
+            <Image src={banner} layout="fill" alt="Session banner"/>
+          )}
           <Box
             position="absolute"
             top="0"

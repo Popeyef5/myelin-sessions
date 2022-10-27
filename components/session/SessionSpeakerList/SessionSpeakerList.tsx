@@ -6,12 +6,12 @@ import {
   UnorderedList,
   VStack,
 } from "@chakra-ui/layout";
-import { Speaker } from "../../../types";
 import NextLink from "next/link";
 import { Avatar } from "@chakra-ui/avatar";
+import { Institution, Speaker } from ".prisma/client";
 
 interface SpeakerBulletProps {
-  s: Speaker;
+  s: Speaker & {institution?: Institution};
 }
 
 const SpeakerBullet = ({ s }: SpeakerBulletProps) => {
@@ -22,7 +22,7 @@ const SpeakerBullet = ({ s }: SpeakerBulletProps) => {
         {s.name}
         {s.role ? ", " + s.role : ""}
         {s.institution ? " @ " : ""}
-        {s.institution ? (
+        {s.institution?.site ? (
           <NextLink href={s.institution.site} passHref target="_blank">
             <Link
               target="_blank"
@@ -44,7 +44,7 @@ const SpeakerBullet = ({ s }: SpeakerBulletProps) => {
 };
 
 interface SpeakerListProps {
-  speakers: Speaker[];
+  speakers?: Speaker[];
 }
 
 export const SessionSpeakerList = ({ speakers }: SpeakerListProps) => {
@@ -56,10 +56,10 @@ export const SessionSpeakerList = ({ speakers }: SpeakerListProps) => {
     >
       <Text fontWeight="400" fontSize={{ base: "20", lg: "25" }} zIndex="10">
         {" "}
-        Speakers:{" "}
+        Speakers:{" "}{speakers?.length ? "" : "TBD"}
       </Text>
       <VStack align="flex-start" pt="15px" gap="15px">
-        {speakers.map((s, i) => {
+        {speakers?.map((s, i) => {
           return <SpeakerBullet s={s} key={i} />;
         })}
       </VStack>
