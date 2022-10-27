@@ -24,7 +24,7 @@ const Login = () => {
 
   const errors: Record<SignInErrorTypes, string> = {
     OAuthAccountNotLinked:
-      "You already signed in using another provider. For safety, please use the same one or sign in using email.",
+      "You already signed up using another provider. Please use the same one or sign in using email.",
     default:
       "An error ocurred. If it persists, please contact us at sessions@myelin.vc.",
   };
