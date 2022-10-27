@@ -30,18 +30,21 @@ export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
 
   const { applications, setApplications } = useContext(AppContext);
 
-  const [isRegistered, setIsRegistered] = useState(
-    applications.length > 0 &&
+  const registeredCondition = () => {
+    return (
+      applications.length > 0 &&
       status === "authenticated" &&
-      applications.map((a) => a.userId).includes(session!.user.id)
-  );
+      applications
+        .filter((a) => a.episodeId === episode.id)
+        .map((a) => a.userId)
+        .includes(session!.user.id)
+    );
+  };
+
+  const [isRegistered, setIsRegistered] = useState(registeredCondition());
 
   useEffect(() => {
-    setIsRegistered(
-      applications.length > 0 &&
-        status === "authenticated" &&
-        applications.map((a) => a.userId).includes(session!.user.id)
-    );
+    setIsRegistered(registeredCondition());
   }, [applications, status]);
 
   const [isSending, setIsSending] = useState(false);
