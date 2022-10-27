@@ -15,7 +15,7 @@ import {
 import { useDisclosure } from "@chakra-ui/hooks";
 import { isProfileEmpty } from "../../../../lib/util";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Application, Episode } from ".prisma/client";
 import { AppContext } from "../../../../pages/_app";
 
@@ -35,6 +35,14 @@ export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
       status === "authenticated" &&
       applications.map((a) => a.userId).includes(session!.user.id)
   );
+
+  useEffect(() => {
+    setIsRegistered(
+      applications.length > 0 &&
+        status === "authenticated" &&
+        applications.map((a) => a.userId).includes(session!.user.id)
+    );
+  }, [applications, status]);
 
   const [isSending, setIsSending] = useState(false);
 
@@ -56,7 +64,7 @@ export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
       }
 
       const newApplication: Application = await response.json();
-      setApplications([...applications, newApplication])
+      setApplications([...applications, newApplication]);
 
       setIsSending(false);
       setIsRegistered(true);
@@ -113,10 +121,10 @@ export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
           <ModalContent bg="#000f14" border="2px solid white">
             <ModalBody padding="25px">
               <Text>
-                Your profile data is empty. As seats are limited, we&apos;ll choose
-                the attendees based on the information provided to us. You can
-                apply anyways and update your data later or you can fill the
-                information first.
+                Your profile data is empty. As seats are limited, we&apos;ll
+                choose the attendees based on the information provided to us.
+                You can apply anyways and update your data later or you can fill
+                the information first.
               </Text>
             </ModalBody>
 

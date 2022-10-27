@@ -93,10 +93,10 @@ const theme = extendTheme({
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [applications, setApplications] = useState<Application[]>([]);
-  const { data } = useSWR<Application[]>("/api/application", fetcher);
+  const { data } = useSWR<{result: Application[]}>("/api/application", fetcher);
   useEffect(() => {
     if (data) {
-      setApplications(data);
+      setApplications(data.result);
     }
   }, [data]);
 
