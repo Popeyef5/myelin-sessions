@@ -27,7 +27,7 @@ export const SessionBanner = ({ banner }: BannerProps) => {
               style={{ width: "100%", height: "100%" }}
             />
           ) : (
-            <Image src={banner} layout="fill" />
+            <Image src={banner} layout="fill" alt="Session banner"/>
           )}
           <Box
             position="absolute"

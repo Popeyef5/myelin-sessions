@@ -30,7 +30,7 @@ export const SessionCard = ({ session }: SessionCardProps) => {
                 style={{ width: "100%", height: "100%" }}
               />
             ) : (
-              <Image src={session.banner || ""} layout="fill" />
+              <Image src={session.banner || ""} layout="fill" alt="Sessiob banner"/>
             )}
             <Box
               position="absolute"

@@ -15,7 +15,9 @@ interface SeasonsProps {
 
 export const getStaticProps: GetStaticProps = async () => {
   const seasons = await prisma.season.findMany({
-    include: { episodes: { include: { speakers: {include: {institution: true}} } } },
+    include: {
+      episodes: { include: { speakers: { include: { institution: true } } } },
+    },
   });
   return {
     props: { seasons },
@@ -24,7 +26,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const Seasons = ({ seasons }: SeasonsProps) => {
   const [season, setSeason] = useState(seasons[0]);
-  console.log(seasons);
 
   return (
     <VStack align="left" px="100px" gap="100px" py="50px">
@@ -37,6 +38,7 @@ const Seasons = ({ seasons }: SeasonsProps) => {
           <MenuList bg="#000f14">
             {seasons.map((season) => (
               <MenuItem
+                key={season.id}
                 isDisabled={season.episodes === undefined}
                 _focus={{ bg: "#000f14" }}
                 _active={{ bg: "#000f14" }}
@@ -49,7 +51,7 @@ const Seasons = ({ seasons }: SeasonsProps) => {
       </Text>
       <Grid templateColumns={{ base: `repeat(4, 1fr)` }} gap="50px">
         {season.episodes?.map((session) => (
-          <SessionCard session={session} />
+          <SessionCard key={session.id} session={session} />
         ))}
       </Grid>
     </VStack>

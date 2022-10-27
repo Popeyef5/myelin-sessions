@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { email, name, company, social } = req.body;
 
   if (!email || !email.length) {
@@ -20,8 +20,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     merge_fields: {
       FNAME: name,
       COMPANY: company,
-      SOCIAL: social
-    }
+      SOCIAL: social,
+    },
   };
 
   const options = {
@@ -35,13 +35,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const response = await axios.post(url, data, options);
     if (response.status >= 400) {
       return res.status(400).json({
-        error: `There was an error applying for a sear. Shoot an email at info@myelin.vc and we'll add you to the list.`,
+        error: `There was an error applying for a seat. Shoot an email at sessions@myelin.vc and we'll add you to the list.`,
       });
     }
     return res.status(201).json({ message: "success" });
   } catch (error) {
     let message = "Unknown Error";
-    console.log(error)
     return res.status(500).json({ error: message });
   }
 };
+
+export default handler;
