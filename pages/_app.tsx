@@ -122,6 +122,14 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
       `,
         }}
       />
+      <Script id="smart-tag">
+        {`window.smartlook||(function(d) {
+    var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+    var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+    c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);
+    })(document);
+    smartlook('init', '48a4949fbc712034719b24238322360baf6a1d2e', { region: 'eu' });`}
+      </Script>
       <AppContext.Provider value={{ applications, setApplications }}>
         <SessionProvider session={session}>
           <ChakraProvider theme={theme}>
