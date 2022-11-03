@@ -122,7 +122,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
       `,
         }}
       />
-      <Script>
+      <Script id="smartlook">
         {`window.smartlook||(function(d) {
     var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
     var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
