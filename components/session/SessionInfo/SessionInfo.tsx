@@ -13,7 +13,7 @@ export const SessionInfo = ({ date, speakers }: InfoProps) => {
   return (
     <>
       <Text fontWeight="100" fontSize={{ base: "12", lg: "20" }} zIndex="10">
-        {date ? formatDate(trueDate) : "Date: TBD"}
+        {formatDate(trueDate) || "Date: TBD"}
       </Text>
       <SessionSpeakerList speakers={speakers} />
     </>
