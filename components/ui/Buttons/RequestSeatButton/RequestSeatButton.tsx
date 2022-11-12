@@ -90,10 +90,6 @@ export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
 
   return (
     <>
-      <Center
-        paddingTop={{ base: "20px", lg: "0" }}
-        minW={{ base: "100%", lg: "0" }}
-      >
         <Button
           px="25px"
           py={{ base: "25px", lg: "30px" }}
@@ -157,7 +153,6 @@ export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
             </ModalFooter>
           </ModalContent>
         </Modal>
-      </Center>
     </>
   );
 };
