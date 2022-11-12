@@ -76,8 +76,11 @@ export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
     }
   };
 
-  const conditionalRequest = () => {
-    if (!session) return;
+  const conditionalRequest = async () => {
+    if (!session) {
+      await router.push("/login");
+      return;
+    }
     if (isProfileEmpty(session.user)) {
       onOpen();
     } else {
@@ -96,8 +99,8 @@ export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
           py={{ base: "25px", lg: "30px" }}
           bg="white"
           onClick={conditionalRequest}
-          isDisabled={session === null || isRegistered}
-          isLoading={isSending}
+          isDisabled={isRegistered}
+          isLoading={isSending || status === "loading"}
         >
           {session ? (
             isRegistered ? (
