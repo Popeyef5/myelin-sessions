@@ -91,7 +91,7 @@ const Session: NextPage<EpisodeProps> = ({ episode }: EpisodeProps) => {
         <Spacer />
         <Stack direction={{base: "column", lg: "row"}} paddingTop={{base: "20px", lg: "0"}}>
           <RequestSeatButton episode={episode} />
-          <ShareButton />
+          {/* <ShareButton /> */}
         </Stack>
       </Flex>
     </>
