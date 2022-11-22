@@ -58,7 +58,7 @@ export const formatDate = (datetime: Date | null) => {
 
   if (year < 2022) return "";
 
-  const time = minutes % 10 ? "" : `. ${hour}h${minutes} GMT`;
+  const time = minutes % 10 ? "" : `. ${hour}h${minutes || ''} GMT`;
   const day = weekday > 5 ? "" : `${date}, `;
 
   return `${month} ` + day + `${year}` + time;

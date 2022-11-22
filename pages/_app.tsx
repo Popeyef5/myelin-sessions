@@ -90,6 +90,9 @@ const theme = extendTheme({
     Button,
   },
   breakpoints,
+  fonts: {
+    body: "'JetBrains Mono', monospace"
+  }
 });
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {

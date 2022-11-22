@@ -1,6 +1,7 @@
-import { Box, Flex, Spacer, VStack } from "@chakra-ui/layout";
+import { Box, Flex, HStack, Spacer, Stack, VStack } from "@chakra-ui/layout";
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { RequestSeatButton } from "../../components/ui/Buttons/RequestSeatButton";
+import { ShareButton } from "../../components/ui/Buttons/ShareButton";
 import { BsArrowUpLeft } from "react-icons/bs";
 
 import { SessionInfo } from "../../components/session/SessionInfo";
@@ -88,7 +89,10 @@ const Session: NextPage<EpisodeProps> = ({ episode }: EpisodeProps) => {
           date={episode.date?.toString()}
         />
         <Spacer />
-        <RequestSeatButton episode={episode} />
+        <Stack direction={{base: "column", lg: "row"}} paddingTop={{base: "20px", lg: "0"}}>
+          <RequestSeatButton episode={episode} />
+          {/* <ShareButton /> */}
+        </Stack>
       </Flex>
     </>
   );

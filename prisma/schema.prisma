@@ -20,13 +20,18 @@ model Institution {
 }
 
 model Speaker {
-  id            String       @id @default(cuid())
-  name          String
-  role          String?
-  picture       String?
-  institution   Institution? @relation(fields: [institutionId], references: [id], onDelete: SetNull)
-  institutionId String?
-  episodes      Episode[]
+  id              String           @id @default(cuid())
+  name            String
+  role            String?
+  picture         String?
+  institution     Institution?     @relation(fields: [institutionId], references: [id], onDelete: SetNull)
+  institutionId   String?
+  episodes        Episode[]
+  questions       Question[]
+  dares           Dare[]
+  dareDraws       DareDraw[]
+  questionDraws   QuestionDraw[]
+  questionUpvotes QuestionUpvote[]
 
   @@index([institutionId])
 }
@@ -44,16 +49,18 @@ model Application {
 }
 
 model Episode {
-  id           String        @id @default(cuid())
-  title        String        @unique
-  slug         String        @unique
-  date         DateTime?
-  banner       String?
-  thumbnail    String?
-  season       Season        @relation(fields: [seasonId], references: [id], onDelete: Cascade)
-  seasonId     String
-  applications Application[]
-  speakers     Speaker[]
+  id            String         @id @default(cuid())
+  title         String         @unique
+  slug          String         @unique
+  date          DateTime?
+  banner        String?
+  thumbnail     String?
+  season        Season         @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  seasonId      String
+  applications  Application[]
+  speakers      Speaker[]
+  dareDraws     DareDraw[]
+  questionDraws QuestionDraw[]
 
   @@index([seasonId])
 }
@@ -92,20 +99,21 @@ model Session {
 }
 
 model User {
-  id            String        @id @default(cuid())
-  name          String?
-  email         String?       @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  company       String?
-  role          String?
-  twitter       String?
-  github        String?
-  linkedin      String?
-  other         String?
-  applications  Application[]
+  id              String           @id @default(cuid())
+  name            String?
+  email           String?          @unique
+  emailVerified   DateTime?
+  image           String?
+  accounts        Account[]
+  sessions        Session[]
+  company         String?
+  role            String?
+  twitter         String?
+  github          String?
+  linkedin        String?
+  other           String?
+  applications    Application[]
+  questionUpvotes QuestionUpvote[]
 }
 
 model VerificationToken {
@@ -114,4 +122,55 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Question {
+  id       String           @id @default(cuid())
+  speakers Speaker[]
+  text     String?          @db.Text
+  draws    QuestionDraw[]
+  upvotes  QuestionUpvote[]
+}
+
+model QuestionDraw {
+  id         String   @id @default(cuid())
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId String
+  datetime   DateTime
+  Episode    Episode  @relation(fields: [episodeId], references: [id])
+  episodeId  String
+  Speaker    Speaker  @relation(fields: [speakerId], references: [id])
+  speakerId  String
+}
+
+model QuestionUpvote {
+  id         String   @id @default(cuid())
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  speaker    Speaker  @relation(fields: [speakerId], references: [id], onDelete: Cascade)
+  speakerId  String
+  datetime   DateTime
+  deleted    DateTime @default("1970-01-01T00:00:00.000Z")
+
+  @@unique([questionId, userId, speakerId, deleted])
+}
+
+model Dare {
+  id       String     @id @default(cuid())
+  speakers Speaker[]
+  text     String?    @db.Text
+  draws    DareDraw[]
+}
+
+model DareDraw {
+  id        String   @id @default(cuid())
+  dare      Dare     @relation(fields: [dareId], references: [id], onDelete: Cascade)
+  dareId    String
+  speaker   Speaker  @relation(fields: [speakerId], references: [id], onDelete: Cascade)
+  speakerId String
+  episode   Episode  @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+  episodeId String
+  datetime  DateTime
 }
