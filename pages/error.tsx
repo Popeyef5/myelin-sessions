@@ -2,7 +2,7 @@ import { Center, Heading, Text } from "@chakra-ui/layout";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-const Verify = () => {
+const Error = () => {
   return (
     <Center flexGrow="1" padding="150px">
       <Heading>
@@ -13,4 +13,4 @@ const Verify = () => {
   );
 };
 
-export default Verify;
+export default Error;

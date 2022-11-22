@@ -9,6 +9,7 @@ declare module "next-auth" {
     github: string;
     linkedin: string;
     other: string;
+    email: string?;
   }
 
   interface Session {
@@ -21,6 +22,7 @@ declare module "next-auth" {
       github: string?;
       linkedin: string?;
       other: string?;
+      email: string?;
     };
   }
 }
