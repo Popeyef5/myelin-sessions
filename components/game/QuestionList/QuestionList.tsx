@@ -103,7 +103,7 @@ export const QuestionList = ({ filters, player }: QuestionListProps) => {
                 <Button
                   minW="110px"
                   onClick={() => upsertUpvote(q)}
-                  disabled={isSending !== "" && isSending !== q.id}
+                  disabled={(isSending !== "" && isSending !== q.id) || q.drawn}
                   isLoading={isSending === q.id}
                 >
                   {q.drawn ? "Asked" : q.upvoted ? "Downvote" : "Upvote"}
