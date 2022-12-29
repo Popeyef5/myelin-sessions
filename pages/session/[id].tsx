@@ -22,7 +22,7 @@ interface SessionParams {
 }
 
 interface EpisodeProps {
-  episode?: Episode & { speakers?: Speaker[] };
+  episode?: Episode & { speakers?: Speaker[], date: string };
 }
 
 export async function getStaticPaths() {
