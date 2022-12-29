@@ -56,7 +56,7 @@ export const formatDate = (datetime: Date | null) => {
   const hour = datetime.getUTCHours();
   const minutes = datetime.getMinutes();
 
-  if (year < 2022) return "";
+  if (year > 2100) return "";
 
   const time = minutes % 10 ? "" : `. ${hour}h${minutes || ''} GMT`;
   const day = weekday > 5 ? "" : `${date}, `;
