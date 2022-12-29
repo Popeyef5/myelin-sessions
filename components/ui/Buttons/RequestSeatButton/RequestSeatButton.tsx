@@ -20,7 +20,7 @@ import { Application, Episode } from ".prisma/client";
 import { AppContext } from "../../../../pages/_app";
 
 interface RequestSeatButtonProps {
-  episode: Episode;
+  episode: Episode & {date: string};
 }
 
 export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
@@ -88,71 +88,73 @@ export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
     }
   };
 
+  const date = new Date(episode.date);
+
   return (
     <>
-        <Button
-          px="25px"
-          py={{ base: "25px", lg: "30px" }}
-          bg="white"
-          onClick={conditionalRequest}
-          isDisabled={isRegistered}
-          isLoading={isSending || status === "loading"}
-        >
-          {session ? (
-            isRegistered ? (
-              <Text color="black" fontSize={{ base: "15", lg: "20" }}>
-                Seat requested
-              </Text>
-            ) : (
-              <HStack>
-                <Icon as={MdAddCircleOutline} color="black" fontSize="20" />
-                <Text color="black" fontSize={{ base: "15", lg: "20" }}>
-                  Request Seat
-                </Text>
-              </HStack>
-            )
-          ) : (
+      <Button
+        px="25px"
+        py={{ base: "25px", lg: "30px" }}
+        bg="white"
+        onClick={conditionalRequest}
+        isDisabled={isRegistered || date < new Date()}
+        isLoading={isSending || status === "loading"}
+      >
+        {session ? (
+          isRegistered ? (
             <Text color="black" fontSize={{ base: "15", lg: "20" }}>
-              Log in to request seat
+              Seat requested
             </Text>
-          )}
-        </Button>
-
-        <Modal isOpen={isOpen} onClose={onClose} isCentered>
-          <ModalOverlay />
-          <ModalContent bg="#000f14" border="2px solid white">
-            <ModalBody padding="25px">
-              <Text>
-                Your profile data is empty. As seats are limited, we&apos;ll
-                choose the attendees based on the information provided to us.
-                You can apply anyways and update your data later or you can fill
-                the information first.
+          ) : (
+            <HStack>
+              <Icon as={MdAddCircleOutline} color="black" fontSize="20" />
+              <Text color="black" fontSize={{ base: "15", lg: "20" }}>
+                Request Seat
               </Text>
-            </ModalBody>
+            </HStack>
+          )
+        ) : (
+          <Text color="black" fontSize={{ base: "15", lg: "20" }}>
+            Log in to request seat
+          </Text>
+        )}
+      </Button>
 
-            <ModalFooter justifyContent="space-between">
-              <Button
-                bg="#00dcda"
-                color="white"
-                mr={3}
-                onClick={() => {
-                  onClose();
-                  requestSeat();
-                }}
-              >
-                Request anyways
-              </Button>
-              <Button
-                onClick={() => {
-                  router.push("/profile");
-                }}
-              >
-                {" "}
-                Fill profile{" "}
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent bg="#000f14" border="2px solid white">
+          <ModalBody padding="25px">
+            <Text>
+              Your profile data is empty. As seats are limited, we&apos;ll
+              choose the attendees based on the information provided to us. You
+              can apply anyways and update your data later or you can fill the
+              information first.
+            </Text>
+          </ModalBody>
+
+          <ModalFooter justifyContent="space-between">
+            <Button
+              bg="#00dcda"
+              color="white"
+              mr={3}
+              onClick={() => {
+                onClose();
+                requestSeat();
+              }}
+            >
+              Request anyways
+            </Button>
+            <Button
+              onClick={() => {
+                router.push("/profile");
+              }}
+            >
+              {" "}
+              Fill profile{" "}
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };
