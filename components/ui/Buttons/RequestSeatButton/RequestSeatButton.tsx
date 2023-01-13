@@ -78,7 +78,7 @@ export const RequestSeatButton = ({ episode }: RequestSeatButtonProps) => {
 
   const conditionalRequest = async () => {
     if (!session) {
-      await router.push("/login");
+      await router.push({pathname: "/login", query: {from: router.asPath}}, "/login");
       return;
     }
     if (isProfileEmpty(session.user)) {

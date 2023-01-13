@@ -15,6 +15,8 @@ const Login = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  const callbackUrl = (router.query["from"] as string) || "/seasons";
+
   const [called, setCalled] = useState("");
   const [email, setEmail] = useState("");
   const [openEmail, setOpenEmail] = useState(false);
@@ -57,9 +59,9 @@ const Login = () => {
     if (called) return;
     setCalled(provider);
     if (provider !== "email") {
-      signIn(provider);
+      signIn(provider, { callbackUrl });
     } else {
-      signIn(provider, { callbackUrl: "/seasons", email });
+      signIn(provider, { callbackUrl, email });
     }
   };
 
